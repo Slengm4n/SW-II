@@ -1,0 +1,11 @@
+
+GET http://localhost:8080/consultar
+
+###
+POST http://localhost:8080/gravar-venda
+
+content-type: application/json
+{
+    "codigo": "123456",
+    "valor": "96.89"
+}
