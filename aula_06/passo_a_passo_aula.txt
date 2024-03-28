@@ -1,0 +1,45 @@
+1) Abrimos um diretório com o VS CODE (Menu FILE > OPEN FOLDER ou ARQUIVO > ABRIR PASTA)
+2) Abrimos um terminal e digitamos o comando "npm init -y" para criar a estrutura do nosso projeto NodeJS.
+3) instalamos as dependências necessárias do npm com o comando "npm install express nodemon mysql2" 
+	-express: framework de apoio para desenvolvimento de APIs
+	-nodemon: biblioteca para evitar ficar reiniciando o servidor a cada alteração de código
+	-mysql2: biblioteca para realizarmos conexão e manipulação de registros com mysql;
+4) Criamos um arquivo app.js na raiz do nosso projeto (Aqui ficarão as rotas dos nossos endpoints, conforme já praticamos em outras aulas)
+5) Criamos um arquivo "teste.http" para testarmos nossos endpoints criados (Já fizemos isso em aulas passadas)
+6) No arquivo package.json inserimos o script "start" com o comando "nodemon app.js" para que o servidor seja reiniciado toda vez que salvarmos alterações no nosso código.
+7) No terminal, executamos o comando "npm run start" para subir a aplicação.
+
+8) (SUBINDO O SERVIDOR) No arquivo app.js
+	- importamos a biblioteca express
+	- instanciamos o express em uma variável chamada server.
+	- definimos um ip e porta para nosso servidor subir.
+	- subimos o servidor com "server.listen"
+	- criamos uma primeira rota teste para a raiz do app (http://127.0.0.1:8080)
+
+8) No arquivo teste.http criamos um teste para a rota padrão:
+	GET http://127.0.0.1:8080
+
+9) (CONECTANDO AO BANCO DE DADOS):
+	- Utilizamos o grenciador de banco de dados mysql instalado nas máquinas do laboratório. 
+	- Criamos um banco de dados chamado DB_ETEC
+	- Dentro dele criamos uma tabela chamada USUARIOS contendo os campos ID, LOGIN e PERFIL (script sql anexado no diretório da aula)
+	- Inserimos, manualmente, registros na tabela usuários para consumirmos no nosso primeiro endpoint GET que consulta a base de dados
+
+	 No diretório "bd" do nosso projeto criamos um arquivo chamado "mysqldb.js" e nele:
+		- Importamos a biblioteca do mysql2
+		- Criamos uma variável "connection" que recebe a criação de uma conexão. Nessa criação passamos um objeto com os dados da conexão: host, porta, banco, usuario e senha)
+	- Executamos o método "connect" da nossa conexão para efetivamente conectar ao banco. Nesse método passamos uma função interna que nos informa se deu sucesso ou erro na conexão.
+	- Ao final, exportamos o nosso arquivo mysqldb para que possamos usá-lo em outros módulos da nossa aplicação para conectar ao banco. Isso evita que precisemos criar esse mesmo código em todos os lugares que formos utilizar a conexão ao banco de dados.
+
+
+10) Voltamos ao nosso app.js. 
+	- Nele, importamos o nosso módulo "connection" anteriormente exportado do mysqldb.js. Dessa forma, já na importação e sem usá-lo, receberemos a mensagem no console com a indicação se o banco foi conectado ou não ao subir a aplicação.
+	
+	ROTA GET USUÁRIOS: 
+	- Criamos uma rota GET para listar os usuários cadastrados no banco.
+		- chamámos o método "query" passando como parâmetros uma instrução SQL e uma função que recebe como parâmetros um possível erro e um possível resultado.
+		- Caso erro esteja populado então significa que a instrução sql falhou.
+		- Caso contrário, significa que a instrução sql foi executada com sucesso e o resultado da query estará no parâmetro resultado.
+
+
+	
